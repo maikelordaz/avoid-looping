@@ -40,3 +40,5 @@ The simulations are still WIP as they dont work yet
 node script/functions/request.js
 ```
 
+[top](#avoid-big-loops)
+
