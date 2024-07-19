@@ -2,7 +2,7 @@
 const ethers = await import("npm:ethers@6.13.1")
 
 // Constants
-const RPC_URL = "https://arb-sepolia.g.alchemy.com/v2/n9MT7ctzplG9cQ1Bn7Aix-i-6pA0zFh"
+const RPC_URL = "https://arbitrum-sepolia.blockpi.network/v1/rpc/public"
 const CONTRACT_ADDRESS = "0x1c013307389e8aB246bbE53F743e58Bb3d40a627"
 
 // Requires are not supported so the ABI must be inlined in the script.
@@ -71,11 +71,13 @@ console.log("Adding array elements from contract example")
 const provider = new FunctionsJsonRpcProvider(RPC_URL)
 // const dataFeedContract = new ethers.Contract(CONTRACT_ADDRESS, abi, provider)
 
+console.log("Getting contract")
 const unboundLoopContract = new ethers.Contract(CONTRACT_ADDRESS, abi, provider)
 
 let total = 0
 
 const arrayLength = await unboundLoopContract.getArrayLength()
+console.log("Array length: ", arrayLength)
 
 for (let i = 0; i < arrayLength; i++) {
     const result = await unboundLoopContract.s_hugeArray(i)
