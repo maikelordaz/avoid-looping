@@ -1,0 +1,41 @@
+[
+    {
+        "type": "function",
+        "name": "fill",
+        "inputs": [
+            { "name": "x", "type": "uint256", "internalType": "uint256" },
+            { "name": "y", "type": "uint256", "internalType": "uint256" }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "type": "function",
+        "name": "getArrayLength",
+        "inputs": [],
+        "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "s_hugeArray",
+        "inputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+        "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "sum",
+        "inputs": [],
+        "outputs": [{ "name": "s", "type": "uint256", "internalType": "uint256" }],
+        "stateMutability": "view"
+    },
+    {
+        "type": "error",
+        "name": "IndexOutOfBounds",
+        "inputs": [
+            { "name": "index", "type": "uint256", "internalType": "uint256" },
+            { "name": "maxLength", "type": "uint256", "internalType": "uint256" }
+        ]
+    }
+]

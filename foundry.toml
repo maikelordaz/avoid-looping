@@ -2,5 +2,14 @@
 src = "src"
 out = "out"
 libs = ["lib"]
+remappings = ["@chainlink/=lib/chainlink/"]
+evm_version = "cancun"
+viaIr = true
+
+[etherscan]
+sepolia = { key = "${ARBISCAN_API_KEY}" }
+
+[rpc_endpoints]
+sepolia = "${ARBITRUM_TESTNET_SEPOLIA_RPC_URL}"
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
