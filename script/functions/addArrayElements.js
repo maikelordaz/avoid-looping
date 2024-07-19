@@ -74,16 +74,21 @@ const provider = new FunctionsJsonRpcProvider(RPC_URL)
 console.log("Getting contract")
 const unboundLoopContract = new ethers.Contract(CONTRACT_ADDRESS, abi, provider)
 
-let total = 0
+let total
 
 const arrayLength = await unboundLoopContract.getArrayLength()
 console.log("Array length: ", arrayLength)
 
-for (let i = 0; i < arrayLength; i++) {
+for (let i = 0; i < 4; i++) {
     const result = await unboundLoopContract.s_hugeArray(i)
-    total += result
+    console.log("Element ", i, ": ", result)
+    if (total === undefined) {
+        total = result
+    } else {
+        total = BigInt(total) + result
+    }
 }
 
-console.log("Total: ", total)
+console.log("Total: ", BigInt(total))
 
 return Functions.encodeUint256(total)

@@ -9,7 +9,7 @@ const {
     FulfillmentCode,
 } = require("@chainlink/functions-toolkit")
 const functionsConsumerAbi = require("./utils/computationContractAbi.json")
-const { ethers, JsonRpcProvider } = require("ethers")
+const { ethers } = require("ethers")
 require("dotenv").config()
 
 const consumerAddress = "0x3cC54C633C8bA2cB768599236231B707aD2550D9"
@@ -32,15 +32,18 @@ const makeRequest = async () => {
     const privateKey = process.env.TESTNET_DEPLOYER_PK // fetch PRIVATE_KEY
     if (!privateKey) throw new Error("private key not provided - check your environment variables")
 
-    const rpcUrl = process.env.ARBITRUM_TESTNET_SEPOLIA_RPC_URL
+    // const rpcUrl = process.env.ARBITRUM_TESTNET_SEPOLIA_RPC_URL
+    const rpcUrl = "https://arbitrum-sepolia.blockpi.network/v1/rpc/public"
 
     if (!rpcUrl) throw new Error(`rpcUrl not provided  - check your environment variables`)
 
     // const provider = new ethers.providers.JsonRpcProvider(rpcUrl)
-    const provider = new JsonRpcProvider(rpcUrl)
+    const provider = new ethers.JsonRpcProvider(rpcUrl)
 
-    const wallet = new ethers.Wallet(privateKey)
-    const signer = wallet.connect(provider) // create ethers signer for signing transactions
+    // const wallet = new ethers.Wallet(privateKey)
+    const signer = new ethers.Wallet(privateKey, provider) // create ethers signer for signing transactions
+
+    // const signer = wallet.connect(provider) // create ethers signer for signing transactions
 
     ///////// START SIMULATION ////////////
 
@@ -60,7 +63,7 @@ const makeRequest = async () => {
     } else {
         const returnType = ReturnType.uint256
         const responseBytesHexstring = response.responseBytesHexstring
-        if (ethers.utils.arrayify(responseBytesHexstring).length > 0) {
+        if (ethers.getBytes(responseBytesHexstring).length > 0) {
             const decodedResponse = decodeResult(response.responseBytesHexstring, returnType)
             console.log(`✅ Decoded response to ${returnType}: `, decodedResponse)
         }
