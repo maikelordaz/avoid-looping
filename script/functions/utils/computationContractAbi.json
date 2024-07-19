@@ -1,105 +1,100 @@
 [
     {
-        "type": "constructor",
-        "inputs": [{ "name": "router", "type": "address", "internalType": "address" }],
-        "stateMutability": "nonpayable"
+        "inputs": [{ "internalType": "address", "name": "router", "type": "address" }],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
     },
+    { "inputs": [], "name": "EmptyArgs", "type": "error" },
+    { "inputs": [], "name": "EmptySecrets", "type": "error" },
+    { "inputs": [], "name": "EmptySource", "type": "error" },
+    { "inputs": [], "name": "NoInlineSecrets", "type": "error" },
+    { "inputs": [], "name": "OnlyRouterCanFulfill", "type": "error" },
     {
-        "type": "function",
-        "name": "handleOracleFulfillment",
-        "inputs": [
-            { "name": "requestId", "type": "bytes32", "internalType": "bytes32" },
-            { "name": "response", "type": "bytes", "internalType": "bytes" },
-            { "name": "err", "type": "bytes", "internalType": "bytes" }
-        ],
-        "outputs": [],
-        "stateMutability": "nonpayable"
-    },
-    {
-        "type": "function",
-        "name": "s_lastError",
-        "inputs": [],
-        "outputs": [{ "name": "", "type": "bytes", "internalType": "bytes" }],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "s_lastRequestId",
-        "inputs": [],
-        "outputs": [{ "name": "", "type": "bytes32", "internalType": "bytes32" }],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "s_lastResponse",
-        "inputs": [],
-        "outputs": [{ "name": "", "type": "bytes", "internalType": "bytes" }],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "sendRequest",
-        "inputs": [
-            { "name": "source", "type": "string", "internalType": "string" },
-            { "name": "encryptedSecretsUrls", "type": "bytes", "internalType": "bytes" },
-            { "name": "donHostedSecretsSlotID", "type": "uint8", "internalType": "uint8" },
-            { "name": "donHostedSecretsVersion", "type": "uint64", "internalType": "uint64" },
-            { "name": "args", "type": "string[]", "internalType": "string[]" },
-            { "name": "bytesArgs", "type": "bytes[]", "internalType": "bytes[]" },
-            { "name": "subscriptionId", "type": "uint64", "internalType": "uint64" },
-            { "name": "gasLimit", "type": "uint32", "internalType": "uint32" },
-            { "name": "donID", "type": "bytes32", "internalType": "bytes32" }
-        ],
-        "outputs": [{ "name": "requestId", "type": "bytes32", "internalType": "bytes32" }],
-        "stateMutability": "nonpayable"
-    },
-    {
-        "type": "function",
-        "name": "sendRequestCBOR",
-        "inputs": [
-            { "name": "request", "type": "bytes", "internalType": "bytes" },
-            { "name": "subscriptionId", "type": "uint64", "internalType": "uint64" },
-            { "name": "gasLimit", "type": "uint32", "internalType": "uint32" },
-            { "name": "donID", "type": "bytes32", "internalType": "bytes32" }
-        ],
-        "outputs": [{ "name": "requestId", "type": "bytes32", "internalType": "bytes32" }],
-        "stateMutability": "nonpayable"
-    },
-    {
-        "type": "event",
-        "name": "RequestFulfilled",
-        "inputs": [{ "name": "id", "type": "bytes32", "indexed": true, "internalType": "bytes32" }],
-        "anonymous": false
-    },
-    {
-        "type": "event",
-        "name": "RequestSent",
-        "inputs": [{ "name": "id", "type": "bytes32", "indexed": true, "internalType": "bytes32" }],
-        "anonymous": false
-    },
-    {
-        "type": "event",
-        "name": "Response",
-        "inputs": [
-            {
-                "name": "requestId",
-                "type": "bytes32",
-                "indexed": true,
-                "internalType": "bytes32"
-            },
-            { "name": "response", "type": "bytes", "indexed": false, "internalType": "bytes" },
-            { "name": "err", "type": "bytes", "indexed": false, "internalType": "bytes" }
-        ],
-        "anonymous": false
-    },
-    { "type": "error", "name": "EmptyArgs", "inputs": [] },
-    { "type": "error", "name": "EmptySecrets", "inputs": [] },
-    { "type": "error", "name": "EmptySource", "inputs": [] },
-    { "type": "error", "name": "NoInlineSecrets", "inputs": [] },
-    { "type": "error", "name": "OnlyRouterCanFulfill", "inputs": [] },
-    {
-        "type": "error",
+        "inputs": [{ "internalType": "bytes32", "name": "requestId", "type": "bytes32" }],
         "name": "UnexpectedRequestID",
-        "inputs": [{ "name": "requestId", "type": "bytes32", "internalType": "bytes32" }]
+        "type": "error"
+    },
+    {
+        "anonymous": false,
+        "inputs": [{ "indexed": true, "internalType": "bytes32", "name": "id", "type": "bytes32" }],
+        "name": "RequestFulfilled",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [{ "indexed": true, "internalType": "bytes32", "name": "id", "type": "bytes32" }],
+        "name": "RequestSent",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "bytes32", "name": "requestId", "type": "bytes32" },
+            { "indexed": false, "internalType": "bytes", "name": "response", "type": "bytes" },
+            { "indexed": false, "internalType": "bytes", "name": "err", "type": "bytes" }
+        ],
+        "name": "Response",
+        "type": "event"
+    },
+    {
+        "inputs": [
+            { "internalType": "bytes32", "name": "requestId", "type": "bytes32" },
+            { "internalType": "bytes", "name": "response", "type": "bytes" },
+            { "internalType": "bytes", "name": "err", "type": "bytes" }
+        ],
+        "name": "handleOracleFulfillment",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "s_lastError",
+        "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "s_lastRequestId",
+        "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "s_lastResponse",
+        "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "string", "name": "source", "type": "string" },
+            { "internalType": "bytes", "name": "encryptedSecretsUrls", "type": "bytes" },
+            { "internalType": "uint8", "name": "donHostedSecretsSlotID", "type": "uint8" },
+            { "internalType": "uint64", "name": "donHostedSecretsVersion", "type": "uint64" },
+            { "internalType": "string[]", "name": "args", "type": "string[]" },
+            { "internalType": "bytes[]", "name": "bytesArgs", "type": "bytes[]" },
+            { "internalType": "uint64", "name": "subscriptionId", "type": "uint64" },
+            { "internalType": "uint32", "name": "gasLimit", "type": "uint32" },
+            { "internalType": "bytes32", "name": "donID", "type": "bytes32" }
+        ],
+        "name": "sendRequest",
+        "outputs": [{ "internalType": "bytes32", "name": "requestId", "type": "bytes32" }],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "bytes", "name": "request", "type": "bytes" },
+            { "internalType": "uint64", "name": "subscriptionId", "type": "uint64" },
+            { "internalType": "uint32", "name": "gasLimit", "type": "uint32" },
+            { "internalType": "bytes32", "name": "donID", "type": "bytes32" }
+        ],
+        "name": "sendRequestCBOR",
+        "outputs": [{ "internalType": "bytes32", "name": "requestId", "type": "bytes32" }],
+        "stateMutability": "nonpayable",
+        "type": "function"
     }
 ]

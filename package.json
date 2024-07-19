@@ -1,9 +1,7 @@
 {
   "devDependencies": {
     "@chainlink/functions-toolkit": "^0.2.8",
-    "@nomicfoundation/hardhat-ethers": "^3.0.6",
     "dotenv": "^16.4.5",
-    "ethers": "^6.13.1",
-    "hardhat": "^2.22.6"
+    "ethers": "^6.13.1"
   }
 }

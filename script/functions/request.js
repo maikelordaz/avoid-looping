@@ -9,11 +9,11 @@ const {
     FulfillmentCode,
 } = require("@chainlink/functions-toolkit")
 const functionsConsumerAbi = require("./utils/computationContractAbi.json")
-const ethers = require("ethers")
+const { ethers, JsonRpcProvider } = require("ethers")
 require("dotenv").config()
 
-const consumerAddress = "0x8dFf78B7EE3128D00E90611FBeD20A71397064D9" // REPLACE this with your Functions consumer address
-const subscriptionId = 3 // REPLACE this with your subscription ID
+const consumerAddress = "0x3cC54C633C8bA2cB768599236231B707aD2550D9"
+const subscriptionId = 123
 
 const makeRequest = async () => {
     // hardcoded for Ethereum Sepolia
@@ -25,18 +25,19 @@ const makeRequest = async () => {
     // Initialize functions settings
     const source = fs.readFileSync(path.resolve(__dirname, "addArrayElements.js")).toString()
 
-    // const args = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
-    // const gasLimit = 300000
+    const args = []
+    // const gasLimit = 300000;
 
     // Initialize ethers signer and provider to interact with the contracts onchain
     const privateKey = process.env.TESTNET_DEPLOYER_PK // fetch PRIVATE_KEY
     if (!privateKey) throw new Error("private key not provided - check your environment variables")
 
-    const rpcUrl = process.env.ETHEREUM_SEPOLIA_RPC_URL // fetch Sepolia RPC URL
+    const rpcUrl = process.env.ARBITRUM_TESTNET_SEPOLIA_RPC_URL // fetch Sepolia RPC URL
 
     if (!rpcUrl) throw new Error(`rpcUrl not provided  - check your environment variables`)
 
-    const provider = new ethers.providers.JsonRpcProvider(rpcUrl)
+    // const provider = new ethers.providers.JsonRpcProvider(rpcUrl)
+    const provider = new JsonRpcProvider(rpcUrl)
 
     const wallet = new ethers.Wallet(privateKey)
     const signer = wallet.connect(provider) // create ethers signer for signing transactions
@@ -47,9 +48,9 @@ const makeRequest = async () => {
 
     const response = await simulateScript({
         source: source,
-        args: [],
+        args: args,
         bytesArgs: [], // bytesArgs - arguments can be encoded off-chain to bytes.
-        secrets: {}, // no secrets in this example
+        secrets: {}, // no secrets needed // todo: check how to add secrets
     })
 
     console.log("Simulation result", response)
