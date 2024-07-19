@@ -37,6 +37,6 @@ The nexts are deployed in arb sepolia
 The simulations are still WIP as they dont work yet
 
 ```bash
-node script /functions/request.js
+node script/functions/request.js
 ```
 
