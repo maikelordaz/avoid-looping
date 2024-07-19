@@ -26,7 +26,8 @@ const makeRequest = async () => {
     const source = fs.readFileSync(path.resolve(__dirname, "addArrayElements.js")).toString()
 
     const args = []
-    // const gasLimit = 300000;
+    // const gasLimit = 300000
+    const gasLimit = 1000000000
 
     // Initialize ethers signer and provider to interact with the contracts onchain
     const privateKey = process.env.TESTNET_DEPLOYER_PK // fetch PRIVATE_KEY
@@ -70,29 +71,29 @@ const makeRequest = async () => {
     }
 
     //////// ESTIMATE REQUEST COSTS ////////
-    console.log("\nEstimate request costs...")
-    // Initialize and return SubscriptionManager
-    const subscriptionManager = new SubscriptionManager({
-        signer: signer,
-        linkTokenAddress: linkTokenAddress,
-        functionsRouterAddress: routerAddress,
-    })
-    await subscriptionManager.initialize()
+    // console.log("\nEstimate request costs...")
+    // // Initialize and return SubscriptionManager
+    // const subscriptionManager = new SubscriptionManager({
+    //     signer: signer,
+    //     linkTokenAddress: linkTokenAddress,
+    //     functionsRouterAddress: routerAddress,
+    // })
+    // await subscriptionManager.initialize()
 
-    // estimate costs in Juels
+    // // estimate costs in Juels
 
-    const gasPriceWei = await signer.getGasPrice() // get gasPrice in wei
+    // const gasPriceWei = await signer.getGasPrice() // get gasPrice in wei
 
-    const estimatedCostInJuels = await subscriptionManager.estimateFunctionsRequestCost({
-        donId: donId, // ID of the DON to which the Functions request will be sent
-        subscriptionId: subscriptionId, // Subscription ID
-        callbackGasLimit: gasLimit, // Total gas used by the consumer contract's callback
-        gasPriceWei: BigInt(gasPriceWei), // Gas price in gWei
-    })
+    // const estimatedCostInJuels = await subscriptionManager.estimateFunctionsRequestCost({
+    //     donId: donId, // ID of the DON to which the Functions request will be sent
+    //     subscriptionId: subscriptionId, // Subscription ID
+    //     callbackGasLimit: gasLimit, // Total gas used by the consumer contract's callback
+    //     gasPriceWei: BigInt(gasPriceWei), // Gas price in gWei
+    // })
 
-    console.log(
-        `Fulfillment cost estimated to ${ethers.utils.formatEther(estimatedCostInJuels)} LINK`
-    )
+    // console.log(
+    //     `Fulfillment cost estimated to ${ethers.utils.formatEther(estimatedCostInJuels)} LINK`
+    // )
 
     //////// MAKE REQUEST ////////
 
@@ -103,14 +104,14 @@ const makeRequest = async () => {
     // Actual transaction call
     const transaction = await functionsConsumer.sendRequest(
         source, // source
-        "0x", // user hosted secrets - encryptedSecretsUrls - empty in this example
-        0, // don hosted secrets - slot ID - empty in this example
-        0, // don hosted secrets - version - empty in this example
+        "0x", // user hosted secrets - encryptedSecretsUrls
+        0, // don hosted secrets - slot ID
+        0, // don hosted secrets - version
         args,
         [], // bytesArgs - arguments can be encoded off-chain to bytes.
         subscriptionId,
         gasLimit,
-        ethers.utils.formatBytes32String(donId) // jobId is bytes32 representation of donId
+        ethers.encodeBytes32String(donId) // jobId is bytes32 representation of donId
     )
 
     // Log transaction details
