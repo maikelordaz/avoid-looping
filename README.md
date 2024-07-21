@@ -9,7 +9,8 @@ This project is a test to avoid big loops in solidity using Chainlink Functions.
     - [Usage](#usage)
   - [:books: Deployed contracts](#books-deployed-contracts)
     - [Deploy your own contracts](#deploy-your-own-contracts)
-  - [:dart: Simulations](#dart-simulations)
+  - [:dart: Requests](#dart-requests)
+    - [Scripts](#scripts)
 
 ## :rocket: Walkthrough 
 
@@ -94,9 +95,19 @@ forge script <script_path:contract_name> --rpc-url <rpc_url> --account <account_
 
 [top](#avoid-big-loops)
 
-## :dart: Simulations
+## :dart: Requests
 
-The simulations are still WIP as they dont work yet
+The requests are still WIP as they dont work as expected yet. For the moment it only adds four elements of the array, right now it is set to add the numbers from indexes 996, 997, 998, 999. This would be `996+997+998+999=3990` you can check in arbiscan sepolia the value of `s_lastResponse` this one is in bytes. If you have foundry can easily convert this bytes value in the terminal with 
+
+```bash
+cast to-dec 0x0000000000000000000000000000000000000000000000000000000000000f96
+```
+
+And you'll confirm the value is the correct one
+
+### Scripts
+
+The request is made with the script from `script/functions/request.js` and the code that runs it is on `sript/functions/addArrayElements.js`
 
 ```bash
 node script/functions/request.js
