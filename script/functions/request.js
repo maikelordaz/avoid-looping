@@ -26,8 +26,7 @@ const makeRequest = async () => {
     const source = fs.readFileSync(path.resolve(__dirname, "addArrayElements.js")).toString()
 
     const args = []
-    // const gasLimit = 300000
-    const gasLimit = 1000000000
+    const gasLimit = 300000
 
     // Initialize ethers signer and provider to interact with the contracts onchain
     const privateKey = process.env.TESTNET_DEPLOYER_PK // fetch PRIVATE_KEY
@@ -39,7 +38,7 @@ const makeRequest = async () => {
     if (!rpcUrl) throw new Error(`rpcUrl not provided  - check your environment variables`)
 
     // const provider = new ethers.providers.JsonRpcProvider(rpcUrl)
-    const provider = new ethers.JsonRpcProvider(rpcUrl)
+    const provider = new ethers.providers.JsonRpcProvider(rpcUrl)
 
     // const wallet = new ethers.Wallet(privateKey)
     const signer = new ethers.Wallet(privateKey, provider) // create ethers signer for signing transactions
@@ -64,36 +63,38 @@ const makeRequest = async () => {
     } else {
         const returnType = ReturnType.uint256
         const responseBytesHexstring = response.responseBytesHexstring
-        if (ethers.getBytes(responseBytesHexstring).length > 0) {
+        if (ethers.utils.arrayify(responseBytesHexstring).length > 0) {
             const decodedResponse = decodeResult(response.responseBytesHexstring, returnType)
             console.log(`✅ Decoded response to ${returnType}: `, decodedResponse)
         }
     }
 
     //////// ESTIMATE REQUEST COSTS ////////
-    // console.log("\nEstimate request costs...")
-    // // Initialize and return SubscriptionManager
-    // const subscriptionManager = new SubscriptionManager({
-    //     signer: signer,
-    //     linkTokenAddress: linkTokenAddress,
-    //     functionsRouterAddress: routerAddress,
-    // })
-    // await subscriptionManager.initialize()
+    console.log("\nEstimate request costs...")
+    // Initialize and return SubscriptionManager
 
-    // // estimate costs in Juels
+    const subscriptionManager = new SubscriptionManager({
+        signer: signer,
+        linkTokenAddress: linkTokenAddress,
+        functionsRouterAddress: routerAddress,
+    })
 
-    // const gasPriceWei = await signer.getGasPrice() // get gasPrice in wei
+    await subscriptionManager.initialize()
 
-    // const estimatedCostInJuels = await subscriptionManager.estimateFunctionsRequestCost({
-    //     donId: donId, // ID of the DON to which the Functions request will be sent
-    //     subscriptionId: subscriptionId, // Subscription ID
-    //     callbackGasLimit: gasLimit, // Total gas used by the consumer contract's callback
-    //     gasPriceWei: BigInt(gasPriceWei), // Gas price in gWei
-    // })
+    // estimate costs in Juels
 
-    // console.log(
-    //     `Fulfillment cost estimated to ${ethers.utils.formatEther(estimatedCostInJuels)} LINK`
-    // )
+    const gasPriceWei = await signer.getGasPrice() // get gasPrice in wei
+
+    const estimatedCostInJuels = await subscriptionManager.estimateFunctionsRequestCost({
+        donId: donId, // ID of the DON to which the Functions request will be sent
+        subscriptionId: subscriptionId, // Subscription ID
+        callbackGasLimit: gasLimit, // Total gas used by the consumer contract's callback
+        gasPriceWei: BigInt(gasPriceWei), // Gas price in gWei
+    })
+
+    console.log(
+        `Fulfillment cost estimated to ${ethers.utils.formatEther(estimatedCostInJuels)} LINK`
+    )
 
     //////// MAKE REQUEST ////////
 
@@ -111,7 +112,7 @@ const makeRequest = async () => {
         [], // bytesArgs - arguments can be encoded off-chain to bytes.
         subscriptionId,
         gasLimit,
-        ethers.encodeBytes32String(donId) // jobId is bytes32 representation of donId
+        ethers.utils.formatBytes32String(donId) // jobId is bytes32 representation of donId
     )
 
     // Log transaction details
