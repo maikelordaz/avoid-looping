@@ -3,20 +3,21 @@ This project is a test to avoid big loops in solidity using Chainlink Functions.
 
 - [Avoid big loops](#avoid-big-loops)
   - [:rocket: Walkthrough](#rocket-walkthrough)
-  - [Requirements](#requirements)
-    - [For the smart contracts](#for-the-smart-contracts)
-    - [For the Chainlink Functions simulations](#for-the-chainlink-functions-simulations)
+    - [Requirements](#requirements)
+      - [For the smart contracts](#for-the-smart-contracts)
+      - [For the Chainlink Functions simulations](#for-the-chainlink-functions-simulations)
     - [Usage](#usage)
-  - [:books: Deployed contracts](#books-deployed-contracts)
+  - [:books: Deployments](#books-deployments)
+    - [Deployed contracts](#deployed-contracts)
     - [Deploy your own contracts](#deploy-your-own-contracts)
   - [:dart: Requests](#dart-requests)
     - [Scripts](#scripts)
 
 ## :rocket: Walkthrough 
 
-## Requirements
+### Requirements
 
-### For the smart contracts
+#### For the smart contracts
 
 - [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
   - You'll know you did it right if you can run `git --version` and you see a response like `git version x.x.x`
@@ -27,9 +28,7 @@ This project is a test to avoid big loops in solidity using Chainlink Functions.
   ```
   - You'll know you did it right if you can run `forge --version` and you see a response like `forge 0.2.0 (816e00b 2023-03-16T00:05:26.396218Z)`
 
-[top](#avoid-big-loops)
-
-### For the Chainlink Functions simulations
+#### For the Chainlink Functions simulations
 - [deno](https://docs.deno.com/runtime/manual/) follow the instructions in the documentation
 
 [top](#avoid-big-loops)
@@ -56,13 +55,13 @@ yarn install
 
 [top](#avoid-big-loops)
 
-## :books: Deployed contracts
+## :books: Deployments 
+
+### Deployed contracts
 
 The nexts are deployed in arb sepolia
 [UnboundedLoop](https://sepolia.arbiscan.io/address/0x1c013307389e8ab246bbe53f743e58bb3d40a627)
 [ComputationConsumer](https://sepolia.arbiscan.io/address/0x3cc54c633c8ba2cb768599236231b707ad2550d9)
-
-[top](#avoid-big-loops)
 
 ### Deploy your own contracts
 
@@ -112,6 +111,10 @@ The request is made with the script from `script/functions/request.js` and the c
 ```bash
 node script/functions/request.js
 ```
+> [!NOTE]
+> If you deploy new contracts remember to create a subscription, fund it and add the consumer
 
 [top](#avoid-big-loops)
+
+
 
