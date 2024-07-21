@@ -2,6 +2,6 @@
   "devDependencies": {
     "@chainlink/functions-toolkit": "^0.2.8",
     "dotenv": "^16.4.5",
-    "ethers": "^6.13.1"
+    "ethers": "^5.7.2"
   }
 }
