@@ -79,7 +79,7 @@ let total
 const arrayLength = await unboundLoopContract.getArrayLength()
 console.log("Array length: ", arrayLength)
 
-for (let i = 0; i < 4; i++) {
+for (let i = 996; i < 1000; i++) {
     const result = await unboundLoopContract.s_hugeArray(i)
     console.log("Element ", i, ": ", result)
     if (total === undefined) {
