@@ -3,48 +3,23 @@ const ethers = await import("npm:ethers@6.13.1")
 
 // Constants
 const RPC_URL = "https://arbitrum-sepolia.blockpi.network/v1/rpc/public"
-const CONTRACT_ADDRESS = "0x1c013307389e8aB246bbE53F743e58Bb3d40a627"
+const CONTRACT_ADDRESS = "0x96D3c43893f79F4Ae543A7297b0378Cb15746d83"
 
 // Requires are not supported so the ABI must be inlined in the script.
 const abi = [
     {
-        inputs: [
-            { internalType: "uint256", name: "index", type: "uint256" },
-            { internalType: "uint256", name: "maxLength", type: "uint256" },
-        ],
-        name: "IndexOutOfBounds",
-        type: "error",
-    },
-    {
-        inputs: [
-            { internalType: "uint256", name: "x", type: "uint256" },
-            { internalType: "uint256", name: "y", type: "uint256" },
-        ],
-        name: "fill",
-        outputs: [],
-        stateMutability: "nonpayable",
         type: "function",
-    },
-    {
+        name: "indexId",
         inputs: [],
-        name: "getArrayLength",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        outputs: [{ name: "", type: "uint256", internalType: "uint256" }],
         stateMutability: "view",
-        type: "function",
     },
     {
-        inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-        name: "s_hugeArray",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-        stateMutability: "view",
         type: "function",
-    },
-    {
-        inputs: [],
-        name: "sum",
-        outputs: [{ internalType: "uint256", name: "s", type: "uint256" }],
+        name: "s_hugeMapping",
+        inputs: [{ name: "index", type: "uint256", internalType: "uint256" }],
+        outputs: [{ name: "value", type: "uint256", internalType: "uint256" }],
         stateMutability: "view",
-        type: "function",
     },
 ]
 
@@ -69,18 +44,17 @@ class FunctionsJsonRpcProvider extends ethers.JsonRpcProvider {
 console.log("Adding array elements from contract example")
 
 const provider = new FunctionsJsonRpcProvider(RPC_URL)
-// const dataFeedContract = new ethers.Contract(CONTRACT_ADDRESS, abi, provider)
 
 console.log("Getting contract")
 const unboundLoopContract = new ethers.Contract(CONTRACT_ADDRESS, abi, provider)
 
 let total
 
-const arrayLength = await unboundLoopContract.getArrayLength()
-console.log("Array length: ", arrayLength)
+const lastIndex = await unboundLoopContract.indexId()
+console.log("Last index: ", lastIndex)
 
-for (let i = 996; i < 1000; i++) {
-    const result = await unboundLoopContract.s_hugeArray(i)
+for (let i = 996; i < lastIndex; i++) {
+    const result = await unboundLoopContract.s_hugeMapping(i)
     console.log("Element ", i, ": ", result)
     if (total === undefined) {
         total = result
