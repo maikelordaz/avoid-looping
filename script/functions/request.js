@@ -32,12 +32,10 @@ const makeRequest = async () => {
     const privateKey = process.env.TESTNET_DEPLOYER_PK // fetch PRIVATE_KEY
     if (!privateKey) throw new Error("private key not provided - check your environment variables")
 
-    // const rpcUrl = process.env.ARBITRUM_TESTNET_SEPOLIA_RPC_URL
     const rpcUrl = "https://arbitrum-sepolia.blockpi.network/v1/rpc/public"
 
     if (!rpcUrl) throw new Error(`rpcUrl not provided  - check your environment variables`)
 
-    // const provider = new ethers.providers.JsonRpcProvider(rpcUrl)
     const provider = new ethers.providers.JsonRpcProvider(rpcUrl)
 
     // const wallet = new ethers.Wallet(privateKey)
