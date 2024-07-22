@@ -106,7 +106,7 @@ And you'll confirm the value is the correct one
 
 ### Scripts
 
-The request is made with the script from `script/functions/request.js` and the code that runs it is on `sript/functions/addArrayElements.js`
+The request is made with the script from `script/functions/request.js` and the code that runs it is on `sript/functions/addElements.js`
 
 ```bash
 node script/functions/request.js

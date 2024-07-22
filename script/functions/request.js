@@ -23,7 +23,7 @@ const makeRequest = async () => {
     const explorerUrl = "https://sepolia.arbiscan.io/"
 
     // Initialize functions settings
-    const source = fs.readFileSync(path.resolve(__dirname, "addArrayElements.js")).toString()
+    const source = fs.readFileSync(path.resolve(__dirname, "addElements.js")).toString()
 
     const args = []
     const gasLimit = 300000

@@ -41,7 +41,7 @@ class FunctionsJsonRpcProvider extends ethers.JsonRpcProvider {
     }
 }
 
-console.log("Adding array elements from contract example")
+console.log("Adding mapping elements from contract example")
 
 const provider = new FunctionsJsonRpcProvider(RPC_URL)
 
@@ -55,7 +55,7 @@ console.log("Last index: ", lastIndex)
 
 for (let i = 996; i < lastIndex; i++) {
     const result = await unboundLoopContract.s_hugeMapping(i)
-    console.log("Element ", i, ": ", result)
+    // console.log("Element ", i, ": ", result) // Just to see exactly where the script is
     if (total === undefined) {
         total = result
     } else {
